@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogLeaf - Login</title>
+    <link rel="icon" href="{% static 'images/leaf.png' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+            background: linear-gradient(to right, #6E7F80, #80A867);
+            background-size: 400% 400%; /* To allow smooth movement */
+            animation: aurora 20s ease infinite; /* Smooth transition animation */
+        }
+
+        /* Keyframes for smooth aurora-like background transitions */
+        @keyframes aurora {
+            0% {
+                background-position: 0% 50%;
+                background: linear-gradient(to right, #acd8dc, #eaf3ba); /* Initial gradient */
+            }
+            25% {
+                background-position: 50% 50%;
+                background: linear-gradient(to right, #47d647, #d6f48a); /* Forest green to lime */
+            }
+            50% {
+                background-position: 100% 50%;
+                background: linear-gradient(to right, #c9ce65, #9dda9d); /* Dark olive to light sea green */
+            }
+            75% {
+                background-position: 50% 50%;
+                background: linear-gradient(to right, #66CDAA, #98FB98); /* Medium aquamarine to pale green */
+            }
+            100% {
+                background-position: 0% 50%;
+                background: linear-gradient(to right, #59ca8a, #743cb3); /* Sea green to medium sea green */
+            }
+        }
+
+        .login-card {
+            background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            width: 100%;
+            font-size: 20px;
+            max-width: 500px;
+        }
+        
+
+        /* Center the image */
+        .btn-primary {
+            background-color: #228B22; /* Forest green button */
+            border-color: #228B22; /* Consistent button color */
+        }
+
+        .btn-primary:hover {
+            background-color: #3CB371; /* Medium sea green on hover */
+            border-color: #3CB371; /* Hover effect */
+        }
+
+        .text-primary {
+            color: #228B22 !important; /* Forest green text for links */
+        }
+
+        .text-primary:hover {
+            color: #3CB371 !important; /* Hover effect for links */
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .logo-container img {
+            width: 120px; /* Adjust the size of the logo */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container d-flex flex-column justify-content-center align-items-center">
+        <!-- Logo container -->
+        <div class="logo-container">
+            <img src="{% static 'images/leaf.png' %}" alt="BlogLeaf Logo"> <!-- Reference to your image file -->
+        </div>
+
+        <div class="login-card">
+            <div class="card-body">
+                <h1 class="card-title text-center mb-4">Login to BlogLeaf</h1>
+                
+                <!-- Display messages -->
+                {% if messages %}
+                    <div class="alert alert-dismissible fade show" role="alert">
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <!-- Login Form -->
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username"><b>Username</b></label>
+                        <input type="text" class="login-card" id="username" name="username" placeholder="Enter your username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password"><b>Password</b></label>
+                        <input type="password" class="login-card" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </form>
+                <div class="text-center mt-4">
+                <a href="{% url 'signup_page' %}" class="text-primary">Don't have an account? Sign up</a>
+            </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

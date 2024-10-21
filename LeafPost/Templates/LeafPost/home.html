@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BlogLeaf - Posts</title>
+</head>
+<body>
+    <h1>Blog Posts</h1>
+
+    {% if posts %}
+        <ul>
+            {% for post in posts %}
+                <li>
+                    <h2>
+                        <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
+                    </h2>
+                    <p><strong>By:</strong> {{ post.author.username }} | <strong>Published on:</strong> {{ post.created_at|date:"F d, Y" }}</p>
+                    <p>{{ post.content|truncatewords:30 }}</p>
+                    <a href="{% url 'post_detail' post.slug %}">Read more...</a>
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No posts have been published yet!</p>
+    {% endif %}
+</body>
+</html>
