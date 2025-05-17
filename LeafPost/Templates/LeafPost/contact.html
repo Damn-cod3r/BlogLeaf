@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Contact Us</title>
+<style>
+    /* Make body a column flex container with min height */
+    body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(-45deg, #1e3c72, #2a5298, #76b852, #8DC26F);
+        background-size: 400% 400%;
+        animation: aurora 15s ease infinite;
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+    }
+
+    @keyframes aurora {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        background: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1), transparent 40%),
+                    radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.07), transparent 40%),
+                    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.06), transparent 50%);
+        animation: overlayMove 20s ease-in-out infinite;
+        z-index: 0;
+    }
+
+    @keyframes overlayMove {
+        0% {
+            transform: translate(0, 0);
+        }
+        50% {
+            transform: translate(-20px, 10px);
+        }
+        100% {
+            transform: translate(0, 0);
+        }
+    }
+
+    /* Centered container for logo + form */
+    .center-container {
+        flex: 1; /* takes available vertical space */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 15px;
+        max-width: 450px;
+        width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
+        z-index: 1;
+    }
+
+    .logo-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+        width: 100%;
+    }
+
+    .logo-container img {
+        width: 90px;
+        height: 90px;
+        object-fit: contain;
+    }
+
+    .login-card {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.537);
+        padding: 30px 25px;
+        width: 100%;
+        color: rgba(255, 255, 255, 0.9);
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        box-sizing: border-box;
+    }
+
+    .card-title {
+        text-align: center;
+        font-weight: 600;
+        font-size: 2rem;
+        margin-bottom: 1.8rem;
+        letter-spacing: 2px;
+    }
+
+    .form-group {
+        margin-bottom: 1.2rem;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.9);
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        font-size: 0.9rem;
+    }
+
+    .input-login {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.537);
+        padding: 10px 15px;
+        margin-bottom: 0;
+        width: 100%;
+        max-height: 55px;
+        font-size: 15px;
+        color: white;
+        border: none;
+        outline: none;
+        box-sizing: border-box;
+    }
+
+    .input-login::placeholder {
+        color: #ddd;
+    }
+
+    textarea.input-login {
+        resize: none;
+        height: 120px;
+        max-height: none;
+        padding-top: 12px;
+    }
+
+    .btn-primary {
+        margin-top: 20px;
+        background-color: #228B22;
+        border-color: #228B22;
+        border-radius: 15px;
+        width: 100%;
+        height: 45px;
+        font-size: 16px;
+        color: white;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        border: none;
+        box-shadow: 0 0 15px rgba(34, 139, 34, 0.7);
+    }
+
+    .btn-primary:hover {
+        background-color: #3CB371;
+        border-color: #3CB371;
+        box-shadow: 0 0 25px rgba(60, 179, 113, 0.9);
+    }
+
+    /* Messages styles */
+    .alert {
+        padding: 10px 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        font-weight: 600;
+        box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    }
+
+    .alert-success {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .alert-error, .alert-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .alert-warning {
+        background-color: #ffc107;
+        color: black;
+    }
+
+    /* Back to Home button container */
+    .btn-home-container {
+        padding: 15px;
+        text-align: center;
+        background: transparent;
+        z-index: 1;
+    }
+
+    .btn-home {
+        background-color: #1e90ff;
+        border: none;
+        border-radius: 15px;
+        width: 100%;
+        max-width: 400px;
+        height: 45px;
+        font-size: 16px;
+        font-weight: 700;
+        color: white;
+        cursor: pointer;
+        box-shadow: 0 0 15px rgba(30, 144, 255, 0.7);
+        transition: background-color 0.3s ease;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        line-height: 45px;
+    }
+
+    .btn-home:hover {
+        background-color: #3399ff;
+        box-shadow: 0 0 25px rgba(51, 153, 255, 0.9);
+    }
+</style>
+</head>
+<body>
+  <div class="center-container">
+    <div class="logo-container">
+      <img src="{% static 'images/leaf.png' %}" alt="BlogLeaf Logo" />
+    </div>
+
+    <div class="login-card" role="main" aria-label="Contact us form">
+      
+
+      <h3 class="card-title text-center mb-4">Contact Us</h3>
+      {% if messages %}
+                    <div class="mb-4">
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+        {% endif %}
+      <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" class="input-login" name="name" placeholder="Your full name" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" class="input-login" name="email" placeholder="your.email@example.com" required />
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" class="input-login" name="message" placeholder="Write your message here..." required></textarea>
+        </div>
+        <button type="submit" class="btn-primary">Send Message</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="btn-home-container">
+    <a href="/" class="btn-home" role="button" aria-label="Back to Home Page">← Back to Home</a>
+  </div>
+</body>
+</html>

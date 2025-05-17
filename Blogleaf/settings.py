@@ -25,9 +25,9 @@ SECRET_KEY = 'django-insecure-bd^7kd7dlt)avu6(72f40sqqt%_$34%x@zufx=l5h_n2m0&z-1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]  # Allow all hosts for development
 
-AUTH_USER_MODEL = 'LeafPost.CustomUser'
+
 
 # Application definition
 

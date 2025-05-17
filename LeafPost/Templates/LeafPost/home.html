@@ -139,6 +139,8 @@
                 <img src="{% static 'images/leaf.png' %}" alt="Logo" width="40" height="40" class="me-2">
                 <span class="fw-bold">BlogLeaf</span>
             </a>
+                <a href="{% url 'leafpost:contact_view' %}" class="btn btn-outline-light me-2">Contact</a>
+            
             <div class="d-flex">
                 <a href="{% url 'leafpost:login_view' %}" class="btn btn-outline-light me-2">Login</a>
                 <a href="{% url 'leafpost:signup_view' %}" class="btn btn-aurora">Sign Up</a>

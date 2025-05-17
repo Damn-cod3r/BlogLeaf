@@ -119,8 +119,8 @@
         }
 
         .logo-container img {
-            width: 110px; /* Adjust the size of the logo */
-            height: 110px; /* Adjust the size of the logo */
+            width: 90px; /* Adjust the size of the logo */
+            height: 90px; /* Adjust the size of the logo */
         }
         
     </style>
@@ -134,7 +134,7 @@
 
         <div class="login-card">
             <div class="card-body">
-                <h2 class="card-title text-center mb-4">Login to BlogLeaf</h2>
+                <h3 class="card-title text-center mb-4">Login to BlogLeaf</h3>
                 
                 <!-- Display messages -->
                 {% if messages %}
@@ -149,8 +149,8 @@
                 <form method="post">
                     {% csrf_token %}
                     <div class="form-group">
-                         <label for="email"><b>Email Address</b></label>
-                        <input type="email" class="input-login" id="email" name="email" placeholder="Enter your email" required>
+                         <label for="username"><b>Username</b></label>
+                        <input type="text" class="input-login" id="username" name="username" placeholder="Enter your Username" required>
                     </div>
                     <div class="form-group">
                         <label for="password"><b>Password</b></label>
