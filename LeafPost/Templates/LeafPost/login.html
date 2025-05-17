@@ -14,50 +14,91 @@
             justify-content: center;
             align-items: center;
             color: #333;
-            background: linear-gradient(to right, #6E7F80, #80A867);
+            background: linear-gradient(-45deg, #1e3c72, #2a5298, #76b852, #8DC26F);
             background-size: 400% 400%; /* To allow smooth movement */
-            animation: aurora 20s ease infinite; /* Smooth transition animation */
+            animation: aurora 15s ease infinite; /* Smooth transition animation */
         }
 
-        /* Keyframes for smooth aurora-like background transitions */
         @keyframes aurora {
             0% {
                 background-position: 0% 50%;
-                background: linear-gradient(to right, #acd8dc, #eaf3ba); /* Initial gradient */
-            }
-            25% {
-                background-position: 50% 50%;
-                background: linear-gradient(to right, #47d647, #d6f48a); /* Forest green to lime */
             }
             50% {
                 background-position: 100% 50%;
-                background: linear-gradient(to right, #c9ce65, #9dda9d); /* Dark olive to light sea green */
-            }
-            75% {
-                background-position: 50% 50%;
-                background: linear-gradient(to right, #66CDAA, #98FB98); /* Medium aquamarine to pale green */
             }
             100% {
                 background-position: 0% 50%;
-                background: linear-gradient(to right, #59ca8a, #743cb3); /* Sea green to medium sea green */
             }
         }
-
+    
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            background: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1), transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.07), transparent 40%),
+                        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.06), transparent 50%);
+            animation: overlayMove 20s ease-in-out infinite;
+            z-index: 0;
+        }
+    
+        @keyframes overlayMove {
+            0% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(-20px, 10px);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+        .input-login{
+             background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.537);
+            padding: 10px 15px; /* Adjusted padding */
+            margin-bottom: 0; /* Remove default margin */
+            width: 100%;
+            height: 100%;
+            max-height: 55px; /* Limit the height */
+            max-width: 450px;
+            font-size: 15px;
+        }
+        .form-group {
+    margin-bottom: 1.2rem;
+        }
         .login-card {
             background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
             border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.537);
             padding: 20px;
             width: 100%;
-            font-size: 20px;
-            max-width: 500px;
+            height: 100%;
+            max-height: 500px; /* Limit the height */
+            max-width: 450px;
+            font-size: 15px;
         }
-        
+         .card-title, label, .text-primary {
+            color: rgba(255, 255, 255, 0.9) !important; /* Bright white for readability */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
 
         /* Center the image */
         .btn-primary {
+            margin-top: 20px;
             background-color: #228B22; /* Forest green button */
-            border-color: #228B22; /* Consistent button color */
+            border-color: #228B22;    /* Consistent button color */
+            border-radius: 15px;
+            width: 100%;
+            height: 45px;
+            max-height: none; /* Limit the height */
+            max-width: 450px;
+            font-size: 16px;
         }
 
         .btn-primary:hover {
@@ -66,7 +107,7 @@
         }
 
         .text-primary {
-            color: #228B22 !important; /* Forest green text for links */
+            color: #ffffff !important; /* Forest green text for links */
         }
 
         .text-primary:hover {
@@ -78,9 +119,10 @@
         }
 
         .logo-container img {
-            width: 120px; /* Adjust the size of the logo */
-            height: auto;
+            width: 110px; /* Adjust the size of the logo */
+            height: 110px; /* Adjust the size of the logo */
         }
+        
     </style>
 </head>
 <body>
@@ -92,7 +134,7 @@
 
         <div class="login-card">
             <div class="card-body">
-                <h1 class="card-title text-center mb-4">Login to BlogLeaf</h1>
+                <h2 class="card-title text-center mb-4">Login to BlogLeaf</h2>
                 
                 <!-- Display messages -->
                 {% if messages %}
@@ -107,17 +149,17 @@
                 <form method="post">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label for="username"><b>Username</b></label>
-                        <input type="text" class="login-card" id="username" name="username" placeholder="Enter your username" required>
+                         <label for="email"><b>Email Address</b></label>
+                        <input type="email" class="input-login" id="email" name="email" placeholder="Enter your email" required>
                     </div>
                     <div class="form-group">
                         <label for="password"><b>Password</b></label>
-                        <input type="password" class="login-card" id="password" name="password" placeholder="Enter your password" required>
+                        <input type="password" class="input-login" id="password" name="password" placeholder="Enter your password" required>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Login</button>
                 </form>
                 <div class="text-center mt-4">
-                <a href="{% url 'signup_page' %}" class="text-primary">Don't have an account? Sign up</a>
+                <a href="{% url 'leafpost:signup_view' %}" class="text-primary">Don't have an account? Sign up</a>
             </div>
             </div>
             

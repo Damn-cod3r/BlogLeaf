@@ -13,58 +13,95 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(to right, #93a9ab, #80A867); /* Starting gradient */
+            background: linear-gradient(-45deg, #1e3c72, #2a5298, #76b852, #8DC26F);
             background-size: 400% 400%;
-            animation: aurora 20s ease infinite; /* Smooth aurora-like transition */
+            animation: aurora 15s ease infinite; /* Smooth aurora-like transition */
         }
 
-        /* Keyframes for smooth aurora-like background transitions */
         @keyframes aurora {
             0% {
                 background-position: 0% 50%;
-                background: linear-gradient(to right, #88d0d3, #80A867); /* Initial gradient */
-            }
-            25% {
-                background-position: 50% 50%;
-                background: linear-gradient(to right, #63d263, #32cdab); /* Forest green to lime */
             }
             50% {
                 background-position: 100% 50%;
-                background: linear-gradient(to right, #b4c16d, #8FBC8F); /* Dark olive to light sea green */
-            }
-            75% {
-                background-position: 50% 50%;
-                background: linear-gradient(to right, #66CDAA, #98f3fb); /* Medium aquamarine to pale green */
             }
             100% {
                 background-position: 0% 50%;
-                background: linear-gradient(to right, #b1ab3a, #2ecf77); /* Sea green to medium sea green */
             }
         }
-
+    
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            background: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1), transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.07), transparent 40%),
+                        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.06), transparent 50%);
+            animation: overlayMove 20s ease-in-out infinite;
+            z-index: 0;
+        }
+    
+        @keyframes overlayMove {
+            0% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(-20px, 10px);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+        .input-signup{
+            background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.537);
+            padding: 10px 15px; /* Match login.html */
+            width: 100%;
+            height: 100%;
+            max-height: 55px; /* Limit the height */
+            max-width: 450px;
+            font-size: 15px;
+        }
         .card {
             background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent card background */
             border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Soft shadow */
-            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.537);
+            padding: 10px;
             width: 100%;
-            max-width: 500px;
-            font-size: 20px;
+            height: 100%;
+            max-height: 530px; /* Limit the height */
+            max-width: 450px;
+            font-size: 15px;
         }
-
+        .card-title, label, .text-primary {
+            color: rgba(255, 255, 255, 0.9) !important; /* Bright white for readability */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
         
         .btn-primary {
+            margin-top: 20px;
             background-color: #228B22; /* Forest green button */
-            border-color: #228B22; /* Consistent button color */
+            border-color: #228B22;    /* Consistent button color */
+            border-radius: 15px;
+            width: 100%;
+            height: 45px;
+            max-height: none; /* Limit the height */
+            max-width: 450px;
+            font-size: 16px;
         }
-
+        
         .btn-primary:hover {
             background-color: #3CB371; /* Medium sea green on hover */
             border-color: #3CB371; /* Hover effect */
         }
 
         .text-primary {
-            color: #228B22 !important; /* Forest green text for links */
+            color: #ffffff !important; /* Forest green text for links */
         }
 
         .text-primary:hover {
@@ -76,8 +113,8 @@
         }
 
         .logo-container img {
-            width: 120px; /* Adjust the size of the logo */
-            height: auto;
+            width: 110px; /* Adjust the size of the logo */
+            height: 110px;
         }
     </style>
 </head>
@@ -88,7 +125,7 @@
         </div>
         <div class="card shadow-lg p-4">
             <div class="card-body">
-                <h1 class="card-title text-center mb-4">Signup to BlogLeaf</h1>
+                <h2 class="card-title text-center mb-4">Signup to BlogLeaf</h2>
 
                 <!-- Display messages -->
                 {% if messages %}
@@ -107,23 +144,23 @@
                 <form method="post">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label for="name"><b>Name</b></label>
-                        <input type="text" class="card" id="name" name="name" placeholder="Enter your name" required>
+                        <label for="email"><b>Email Address</b></label>
+                        <input type="email" class="input-signup" id="email" name="email" placeholder="Enter your email" required>
                     </div>
                     <div class="form-group">
-                        <label for="email"><b>Email address</b></label>
-                        <input type="email" class="card" id="email" name="email" placeholder="Enter your email" required>
+                        <label for="Password"><b>Create Password</b></label>
+                        <input type="password" class="input-signup" id="password1" name="password1" placeholder="Create a password" required>
                     </div>
                     <div class="form-group">
-                        <label for="password"><b>Password</b></label>
-                        <input type="password" class="card" id="password" name="password" placeholder="Create a password" required>
+                        <label for="Confirmpassword"><b>Confirm Password</b></label>
+                        <input type="password" class="input-signup" id="password2" name="password2" placeholder="Re-enter your password" required>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary btn-block">Signup</button>
+                        <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
                     </div>
                 </form>
                 <div class="text-center mt-3">
-                    <a href="{% url 'login_page' %}" class="text-primary">Already have an account? Login here</a>
+                    <a href="{% url 'leafpost:login_view' %}" class="text-primary">Already have an account? Login here</a>
                 </div>
             </div>
         </div>

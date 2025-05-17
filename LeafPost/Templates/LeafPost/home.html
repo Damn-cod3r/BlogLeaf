@@ -1,27 +1,263 @@
 <!DOCTYPE html>
-<html>
+{% load static %}
+<html lang="en">
 <head>
-    <title>BlogLeaf - Posts</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogLeaf - Discover Stories</title>
+    <link rel="icon" href="{% static 'images/leaf.png' %}">
+    <!-- Bootstrap + Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --aurora-1: #1e3c72;
+            --aurora-2: #2a5298;
+            --aurora-3: #76b852;
+            --aurora-4: #8DC26F;
+        }
+        
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, var(--aurora-1), var(--aurora-2), var(--aurora-3), var(--aurora-4));
+            background-size: 400% 400%;
+            animation: aurora 15s ease infinite;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        @keyframes aurora {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Particles Effect */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+        }
+
+        /* Glass Morphism Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.36);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Animated Buttons */
+        .btn-aurora {
+            background: rgba(34, 139, 34, 0.8);
+            border: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-aurora:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .btn-aurora:hover:before {
+            left: 100%;
+        }
+
+        /* Floating Animation */
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+
+        /* Typing Effect */
+        .typing-text {
+            border-right: 3px solid white;
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+            animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: white }
+        }
+    </style>
 </head>
 <body>
-    <h1>Blog Posts</h1>
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
 
-    {% if posts %}
-        <ul>
-            {% for post in posts %}
-                <li>
-                    <h2>
-                        <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
-                    </h2>
-                    <p><strong>By:</strong> {{ post.author.username }} | <strong>Published on:</strong> {{ post.created_at|date:"F d, Y" }}</p>
-                    <p>{{ post.content|truncatewords:30 }}</p>
-                    <a href="{% url 'post_detail' post.slug %}">Read more...</a>
-                </li>
-                <hr>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="{% static 'images/leaf.png' %}" alt="Logo" width="40" height="40" class="me-2">
+                <span class="fw-bold">BlogLeaf</span>
+            </a>
+            <div class="d-flex">
+                <a href="{% url 'leafpost:login_view' %}" class="btn btn-outline-light me-2">Login</a>
+                <a href="{% url 'leafpost:signup_view' %}" class="btn btn-aurora">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-5 mt-5">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-3 fw-bold mb-4">
+                        <span class="typing-text">Where Stories Bloom</span>
+                    </h1>
+                    <p class="lead mb-4 opacity-75">
+                        Dive into a garden of thoughts, ideas, and creativity. 
+                        Your next favorite read is just a leaf away.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="{% url 'leafpost:signup_view' %}" class="btn btn-aurora btn-lg px-4">Start Writing</a>
+                        <a href="#featured" class="btn btn-outline-light btn-lg px-4">Explore</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://illustrations.popsy.co/amber/digital-nomad.svg" alt="Hero Illustration" class="img-fluid floating" style="max-height: 500px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Replace static featured posts with dynamic ones
+{% for post in featured_posts %}
+<div class="col-md-4">
+    <div class="glass-card h-100 p-4">
+        {% if post.image %}
+        <div class="position-relative mb-3" style="height: 200px; overflow: hidden; border-radius: 15px;">
+            <img src="{{ post.image.url }}" class="w-100 h-100 object-fit-cover" alt="{{ post.title }}">
+            {% for category in post.categories.all %}
+            <div class="position-absolute bottom-0 start-0 p-3">
+                <span class="badge" style="background-color: {{ category.color }}">{{ category.name }}</span>
+            </div>
             {% endfor %}
-        </ul>
-    {% else %}
-        <p>No posts have been published yet!</p>
-    {% endif %}
+        </div>
+        {% endif %}
+        <h4>{{ post.title }}</h4>
+        <p class="opacity-75">{{ post.content|truncatewords:20 }}</p>
+        <a href="{{ post.get_absolute_url }}" class="text-success text-decoration-none">
+            Read More <i class="fas fa-arrow-right ms-1"></i>
+        </a>
+    </div>
+</div>
+{% endfor %} -->
+
+    <!-- CTA Section -->
+    <section class="py-5 my-5">
+        <div class="container text-center glass-card py-5">
+            <h2 class="display-5 fw-bold mb-4">Ready to Share Your Story?</h2>
+            <p class="lead mb-4 opacity-75">Join our growing community of writers and thinkers.</p>
+            <a href="{% url 'leafpost:signup_view' %}" class="btn btn-aurora btn-lg px-5 py-3">Get Started - It's Free</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+                <div class="mb-3 mb-md-0">
+                    <img src="{% static 'images/leaf.png' %}" alt="Logo" width="30" height="30" class="me-2">
+                    <span class="text-white">© 2025 BlogLeaf. Hand-coded with <span style="color: #e25555;">love</span> and 
+                    <span style="color: #6cf;">passion</span> by 
+                    <span style="font-family: 'Courier New', monospace; color: #00ffae;">Damn-cod3r</span>.
+                    </span>
+                </div>
+                <div class="d-flex gap-3">
+                    <a href="#" class="text-white opacity-75"><i class="fab fa-twitter fa-lg"></i></a>
+                    <a href="#" class="text-white opacity-75"><i class="fab fa-instagram fa-lg"></i></a>
+                    <a href="#" class="text-white opacity-75"><i class="fab fa-linkedin fa-lg"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Create floating particles
+        document.addEventListener('DOMContentLoaded', function() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties
+                const size = Math.random() * 10 + 5;
+                const posX = Math.random() * window.innerWidth;
+                const delay = Math.random() * 15;
+                const duration = Math.random() * 10 + 10;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}px`;
+                particle.style.bottom = `-${size}px`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+            
+            // Typing effect restart
+            setInterval(() => {
+                const typingElement = document.querySelector('.typing-text');
+                typingElement.style.animation = 'none';
+                void typingElement.offsetWidth; // Trigger reflow
+                typingElement.style.animation = 'typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite';
+            }, 3500);
+        });
+    </script>
 </body>
 </html>
