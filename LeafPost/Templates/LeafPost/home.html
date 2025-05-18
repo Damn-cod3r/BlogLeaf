@@ -136,14 +136,18 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="#">
-                <img src="{% static 'images/leaf.png' %}" alt="Logo" width="40" height="40" class="me-2">
+                <img src="{% static 'images/leaf.png' %}" alt="Logo" width="30" height="30" class="me-2">
                 <span class="fw-bold">BlogLeaf</span>
             </a>
-                <a href="{% url 'leafpost:contact_view' %}" class="btn btn-outline-light me-2">Contact</a>
-            
             <div class="d-flex">
-                <a href="{% url 'leafpost:login_view' %}" class="btn btn-outline-light me-2">Login</a>
-                <a href="{% url 'leafpost:signup_view' %}" class="btn btn-aurora">Sign Up</a>
+                <a href="{% url 'leafpost:contact_view' %}" class="btn btn-outline-light me-2"><i class="fas fa-address-book me-2"></i>Contact</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'leafpost:profile_view' %}" class="btn btn-outline-light me-2"><i class="fas fa-user-circle me-2"></i>Profile</a>
+                    <a href="{% url 'leafpost:logout_view' %}" class="btn btn-outline-light"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+                {% else %}
+                    <a href="{% url 'leafpost:login_view' %}" class="btn btn-outline-light me-2"><i class="fas fa-sign-in-alt me-2"></i>Login</a>
+                    <a href="{% url 'leafpost:signup_view' %}" class="btn btn-aurora"><i class="fas fa-user-plus me-2"></i>Sign Up</a>
+                {% endif %}
             </div>
         </div>
     </nav>
@@ -154,16 +158,26 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <h1 class="display-3 fw-bold mb-4">
-                        <span class="typing-text">Where Stories Bloom</span>
+                        {% if user.is_authenticated %}
+                            Welcome to BlogLeaf, {{ user.username }}!
+                        {% else %}
+                            <span class="typing-text">Where Stories Bloom</span>
+                        {% endif %}
                     </h1>
+
                     <p class="lead mb-4 opacity-75">
                         Dive into a garden of thoughts, ideas, and creativity. 
                         Your next favorite read is just a leaf away.
                     </p>
                     <div class="d-flex gap-3">
-                        <a href="{% url 'leafpost:signup_view' %}" class="btn btn-aurora btn-lg px-4">Start Writing</a>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'leafpost:create_post_view' %}" class="btn btn-aurora btn-lg px-4">Create Post</a>
+                        {% else %}
+                            <a href="{% url 'leafpost:signup_view' %}" class="btn btn-aurora btn-lg px-4">Start Writing</a>
+                        {% endif %}
                         <a href="#featured" class="btn btn-outline-light btn-lg px-4">Explore</a>
                     </div>
+
                 </div>
                 <div class="col-lg-6">
                     <img src="https://illustrations.popsy.co/amber/digital-nomad.svg" alt="Hero Illustration" class="img-fluid floating" style="max-height: 500px;">
@@ -193,9 +207,10 @@
         </a>
     </div>
 </div>
-{% endfor %} -->
+{% endfor %}  -->
 
     <!-- CTA Section -->
+    {% if not user.is_authenticated %}
     <section class="py-5 my-5">
         <div class="container text-center glass-card py-5">
             <h2 class="display-5 fw-bold mb-4">Ready to Share Your Story?</h2>
@@ -203,6 +218,8 @@
             <a href="{% url 'leafpost:signup_view' %}" class="btn btn-aurora btn-lg px-5 py-3">Get Started - It's Free</a>
         </div>
     </section>
+    {% endif %}
+
 
     <!-- Footer -->
     <footer class="py-4">
@@ -210,11 +227,16 @@
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
                 <div class="mb-3 mb-md-0">
                     <img src="{% static 'images/leaf.png' %}" alt="Logo" width="30" height="30" class="me-2">
-                    <span class="text-white">© 2025 BlogLeaf. Hand-coded with <span style="color: #e25555;">love</span> and 
-                    <span style="color: #6cf;">passion</span> by 
-                    <span style="font-family: 'Courier New', monospace; color: #00ffae;">Damn-cod3r</span>.
+                    <span class="text-white">
+                        © 2025 BlogLeaf. Developed with 
+                        <span style="color: #e25555;">❤️</span> and 
+                        <span style="color: #6cf;">passion</span> by 
+                        <a href="https://github.com/Damn-cod3r" target="_blank" style="font-family: 'Courier New', monospace; color: #00ffae; text-decoration: none;">
+                            Damn-cod3r
+                        </a>.
                     </span>
                 </div>
+
                 <div class="d-flex gap-3">
                     <a href="#" class="text-white opacity-75"><i class="fab fa-twitter fa-lg"></i></a>
                     <a href="#" class="text-white opacity-75"><i class="fab fa-instagram fa-lg"></i></a>
